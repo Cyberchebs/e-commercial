@@ -1,7 +1,12 @@
+'use client'
 import Link from 'next/link'
 import React from 'react'
 import {AiOutlineShopping} from 'react-icons/ai'
+import { useStateContext } from '@/context/stateContext'
+import { Cart } from '.'
 const Navbar = () => {
+
+  const { setShowCart,showCart, cart, totalQuantities} = useStateContext();
   return (
     <div className='navbar-container'>
       <p>
@@ -9,11 +14,11 @@ const Navbar = () => {
         chebem rig
         </Link>
       </p>
-      <button type='button' className='cart-icon' onClick="">
+      <button type='button' className='cart-icon' onClick={() => setShowCart(true)}>
         <AiOutlineShopping />
-        <span className='cart-item-qty'>1</span>
-        
+        <span className='cart-item-qty'>{totalQuantities}</span>
       </button>
+      {showCart && <Cart />}
     </div>
   )
 }
