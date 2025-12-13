@@ -6,14 +6,38 @@ import { set } from 'sanity';
 const context = createContext();
 
 export const StateContext = ({children}) =>{
+
+  
+
     const [showCart, setShowCart] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantities, setTotalQuantities] = useState(0);
     const [qty, setQty] = useState(1);
 
-    let foundProduct;
-    let index;
+       useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedCart = localStorage.getItem('cartItems');
+            const savedTotal = localStorage.getItem('totalPrice');
+            const savedQuantities = localStorage.getItem('totalQuantities');
+
+            if (savedCart) setCartItems(JSON.parse(savedCart));
+            if (savedTotal) setTotalPrice(parseFloat(savedTotal));
+            if (savedQuantities) setTotalQuantities(parseInt(savedQuantities));
+        }
+    }, []);
+
+     useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            localStorage.setItem('totalPrice', totalPrice.toString());
+            localStorage.setItem('totalQuantities', totalQuantities.toString());
+        }
+    }, [cartItems, totalPrice, totalQuantities]);
+
+
+         let foundProduct;
+         let index;
 
 
     const onAdd =(product, quantity)=>{
