@@ -13,27 +13,34 @@ const Cart = () => {
   const cartRef = useRef();
   const { totalPrice, totalQuantities, cartItems, setShowCart,toggleCartItemQuantity,onRemove } = useStateContext();
    
-  const handleCheckout = async () => {
-    const stripe = await getStripe();
 
-    toast.loading('processing...');
-    const response = await fetch('/api/stripe/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(cartItems),
-    })
 
-    if(!response.ok) return;
+const handleCheckout = async () => {
+  const stripe = await getStripe();
+  
+  const secureCartData = cartItems.map(item => ({
+    productId: item._id,
+    quantity: item.quantity
+  }));
 
-    const data = await response.json();
+  toast.loading('processing...');
+  
+  const response = await fetch('/api/stripe/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(secureCartData),
+  })
 
-    window.location.href = data.url;
+  if(!response.ok) return;
 
-    // toast.loading('Redirecting...');
-    // stripe.redirectToCheckout({ sessionId: data.id });
-   };
+  const data = await response.json();
+
+  window.location.href = data.url;
+  
+};
+
 
   return (
       <div className="cart-wrapper" ref={cartRef}>
