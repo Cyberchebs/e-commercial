@@ -5,9 +5,14 @@ import { Product } from '@/components';
 import ProductImageGallery from '@/components/ProductImageGallery';
 
 const Details = ({product, products}) => {
-    const { decQty, incQty, qty, onAdd } = useStateContext();
+    const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
 
     const { image, name, details, price } = product;
+    
+    const handleBuyNow = () => {
+      onAdd(product, qty);
+      setShowCart(true);
+    }
   return (
  
  <>
@@ -39,7 +44,7 @@ const Details = ({product, products}) => {
           </div>
           <div className='buttons'>
             <button type='button' className='add-to-cart' onClick={() => onAdd(product, qty)}>Add to Cart</button>
-            <button type='button' className='buy-now' onClick="">Buy Now</button>
+            <button type='button' className='buy-now' onClick={handleBuyNow}>Buy Now</button>
             </div>
           </div>
       </div>
