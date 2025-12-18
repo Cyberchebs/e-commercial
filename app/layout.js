@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Chebems pc store",
+  title: "Chebems store",
   description: "buy your pc tech  here",
 };
 
