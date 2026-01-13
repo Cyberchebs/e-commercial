@@ -81,7 +81,7 @@ export async function POST(request) {
         { shipping_rate: 'shr_1SckQOJhUo5kLjImtta0KPk2' }
       ],
       success_url: `${origin}/success`,
-      cancel_url: `${origin}/canceled`,
+      cancel_url: `${origin}/ProductDetails/${cartData[0].productId}`,
     };
 
     const session = await stripe.checkout.sessions.create(params);
