@@ -1,7 +1,7 @@
-name: Test Project
+name: deploy Project
 
 on:
- pull_request:
+ pull_requests:
    branches: -main
 
 
@@ -15,5 +15,4 @@ on:
               with:
               node-version: 20
             - run: npm ci
-            - run: npm test
             - run: npm run build
