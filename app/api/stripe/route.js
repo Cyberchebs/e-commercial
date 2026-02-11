@@ -70,6 +70,11 @@ export async function POST(request) {
 
     const headersList = await headers();
     const origin = headersList.get('origin') || 'http://localhost:3000';
+    
+    
+
+
+    
 
     const params = {
       line_items,
@@ -81,7 +86,8 @@ export async function POST(request) {
         { shipping_rate: 'shr_1SckQOJhUo5kLjImtta0KPk2' }
       ],
       success_url: `${origin}/success`,
-      cancel_url: `${origin}/ProductDetails/${cartData[0].productId}`,
+      
+      cancel_url: `${origin}/product/${cartData[0].product.name}`,
     };
 
     const session = await stripe.checkout.sessions.create(params);
